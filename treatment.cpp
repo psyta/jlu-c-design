@@ -1,7 +1,9 @@
 //钱以分为单位
 
 struct treatment {
-	
+	struct body_Check;
+	struct used_medicine;
+	struct live_hospital
 };
 
 struct body_Check { //体检
