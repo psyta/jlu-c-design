@@ -1,44 +1,31 @@
 #ifndef FUNCTINO_H
 #define FUNCTINO_H
-/* 定义函数 具体功能要求 */
 
-/* 1: 能够从文件中录入多条诊疗记录，也能够随时录入 1 条诊疗记录 */
-// 从文件中导入多条记录
-int addRecordFromFile();
-// 随时录入一条
-int addOneRecord();
+#include "patient.h"
+#include "doctor.h"
+#include "treatment.h"
+#include "record.h"
 
-/* 2: 能够随时修改 1 条诊疗记录。
-按照财务规范，如需修改错误的诊疗记录，应将当前错误的诊疗记录予以撤销后，再补充添加正确的诊疗记录。
- */
-int modifyOneRecord();
+struct patient create_patient(const char name[20], int age, int register_id); //���滼����Ϣ
 
-/* 3: 能够随时删除一条记录 */
-int deleteOneRecord();
+struct doctor * create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list * list); //������ҽ��
 
-/* 4: 能够按照合理顺序打印某个科室的诊疗信息（按照科室检索）。 */
-int searchByDepartment();
+struct doctor * find_doctor(int worker_id, struct doctor_list list);//���ݹ�����Ѱҽ��
 
-/* 5: 能够按照合理顺序打印某位医生的诊疗信息（按照医生的工号检索）。 */
-int searchByDoctor();
+struct treatment create_treatment(struct body_Check * bc, struct used_medicine * um, struct live_hospital * lh); //��졢��ҩ��סԺ
 
-/*6: 【查询】能够按照合理顺序打印某位患者的历史诊疗信息（按照患者的相关信息检索）*/
-int searchByPatient();
+struct body_Check * create_check(struct body_Check * previous, const char name[30], int price); //���������Ŀ
 
-/*7: 【统计】能够统计医院目前的营业额（检查费用+药品费用+住院费用，不 含住院押金）；能够生成目前的住院患者报表。*/
-// 计算营业额
-int calcCurrentTurnover();
-// 生成目前住院报表
-int createLiveInHospital();
+void add_to_medicine_list(struct medicine_list list, const char name[30], int price); //����ҩ������
 
-/*8: 【统计】能够统计每位医生的出诊情况和工作繁忙程度。*/
-int calcDoctorBusy();
+struct medicine * search_medicine(struct medicine_list list, const char name[30]); //����ҩ������ҩ
 
-/*9: 【某段时间范围】能够打印某段时间范围内的所有诊疗信息。*/
+struct used_Medicine create_use_m(struct used_Medicine * previous, struct medicine * m, int amount); //������ҩ
 
-int printRecordDuringTime();
+struct time create_time(int month, int day, int hour, int minute);//����ʱ��
 
-/* 10: 【存储】能够将当前系统中的所有信息保存到文件中。*/
-int saveInfoToFile();
+struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour, int in_minute, int out_month, int out_day, int out_hour, int out_minute); //����סԺ��Ϣ
+
+int addOneRecord(struct record_list list, struct patient pa, struct doctor doc, struct treatment tm); //����һ����Ϣ���ڴ�֮ǰ��Ҫ���������жϺ���
 
 #endif
