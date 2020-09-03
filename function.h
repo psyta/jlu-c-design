@@ -6,31 +6,28 @@
 #include "treatment.h"
 #include "record.h"
 
-/*
-ä¿å­˜æ‚£è€…ä¿¡æ¯
-éœ€è¦ï¼šæ‚£è€…å§“åã€æ‚£è€…å¹´é¾„ã€æ³¨å†Œid
-è¿”å› patient ç»“æ„ä½“
-*/
-struct patient create_patient(const char name[20], int age, int register_id);
+struct patient create_patient(const char name[20], int age, int register_id); //±£´æ»¼ÕßĞÅÏ¢
 
-struct doctor *create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list *list); //æ·»åŠ æ–°åŒ»ç”Ÿ
+struct doctor * create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list * list); //Ìí¼ÓĞÂÒ½Éú
 
-struct doctor *find_doctor(int worker_id, struct doctor_list list); //æ ¹æ®å·¥å·æœå¯»åŒ»ç”Ÿ
+struct doctor * find_doctor(int worker_id, struct doctor_list list);//¸ù¾İ¹¤ºÅËÑÑ°Ò½Éú
 
-struct treatment create_treatment(struct body_Check *bc, struct used_medicine *um, struct live_hospital *lh); //ä½“æ£€ã€ç”¨è¯ã€ä½é™¢
+struct treatment create_treatment(struct body_Check * bc, struct used_Medicine * um, struct live_hospital * lh); //Ìå¼ì¡¢ÓÃÒ©¡¢×¡Ôº
 
-struct body_Check *create_check(struct body_Check *previous, const char name[30], int price); //å¢åŠ ä½“æ£€é¡¹ç›®
+struct body_Check * create_check(struct body_Check * previous, const char name[30], int price); //Ôö¼ÓÌå¼ìÏîÄ¿
 
-void add_to_medicine_list(struct medicine_list list, const char name[30], int price); //å¢åŠ è¯ç‰©ç§ç±»
+void add_to_medicine_list(struct medicine_list * list, const char name[30], int price); //Ôö¼ÓÒ©ÎïÖÖÀà
 
-struct medicine *search_medicine(struct medicine_list list, const char name[30]); //æ ¹æ®è¯åæœç´¢è¯
+struct medicine * search_medicine(struct medicine_list * list, const char name[30]); //¸ù¾İÒ©ÃûËÑË÷Ò©
 
-struct used_Medicine create_use_m(struct used_Medicine *previous, struct medicine *m, int amount); //å¢åŠ ç”¨è¯
+struct used_Medicine * create_use_m(struct used_Medicine * previous, struct medicine * m, int amount); //Ôö¼ÓÓÃÒ©
 
-struct time create_time(int month, int day, int hour, int minute); //åˆ›å»ºæ—¶åˆ»
+struct time create_time(int month, int day, int hour, int minute);//´´½¨Ê±¿Ì
 
-struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour, int in_minute, int out_month, int out_day, int out_hour, int out_minute); //æ·»åŠ ä½é™¢ä¿¡æ¯
+struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour, int in_minute, int out_month, int out_day, int out_hour, int out_minute); //Ìí¼Ó×¡ÔºĞÅÏ¢
 
-int addOneRecord(struct record_list list, struct patient pa, struct doctor doc, struct treatment tm); //æ·»åŠ ä¸€æ¡ä¿¡æ¯ï¼Œåœ¨æ­¤ä¹‹å‰éœ€è¦æ·»åŠ å…¶ä»–åˆ¤æ–­å‡½æ•°
+int addOneRecord(struct record_list * list, struct patient pa, struct doctor * doc, struct treatment tm); //Ìí¼ÓÒ»ÌõĞÅÏ¢£¬ÔÚ´ËÖ®Ç°ĞèÒªÌí¼ÓÆäËûÅĞ¶Ïº¯Êı
+
+void print_all(struct record_list * list);//Êä³öÈ«²¿ĞÅÏ¢£¬²âÊÔÓÃ
 
 #endif

@@ -7,7 +7,7 @@
 
 struct record {
 	struct patient pa;
-	struct doctor doc;
+	struct doctor * doc;
 	struct treatment tm;
 	struct record * next;
 };

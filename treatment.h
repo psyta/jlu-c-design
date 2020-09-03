@@ -1,7 +1,7 @@
 #ifndef TREATMENT_H
 #define TREATMENT_H
 
-//é’±ä»¥åˆ†ä¸ºå•ä½
+//Ç®ÒÔ·ÖÎªµ¥Î»
 
 struct treatment;
 struct body_Check;
@@ -11,37 +11,37 @@ struct used_Medicine;
 struct time;
 struct live_hospital;
 
-struct treatment { //å‡æŒ‡å‘head
+struct treatment { //¾ùÖ¸Ïòhead
 	struct body_Check * bc;
 	int check_total_price;
-	struct used_medicine * um;
+	struct used_Medicine * um;
 	int medicine_total_price;
 	struct live_hospital * lh;
 };
 
-struct body_Check { //ä½“æ£€
+struct body_Check { //Ìå¼ì
 	char name[30];
 	int price;
 	struct body_Check * next;
 };
 
-struct medicine { //è¯å“ä¿¡æ¯
+struct medicine { //Ò©Æ·ĞÅÏ¢
 	char name[30];
-	int unit_Price; //å•ä»·
+	int unit_Price; //µ¥¼Û
 	struct medicine * next;
 };
 
-struct medicine_list { //è®°å½•å…¨éƒ¨è¯å“ä¿¡æ¯
+struct medicine_list { //¼ÇÂ¼È«²¿Ò©Æ·ĞÅÏ¢
 	struct medicine * head;
 };
 
-struct used_Medicine { //ç”¨è¯
+struct used_Medicine { //ÓÃÒ©
 	struct medicine * use_m;
 	int amount;
 	struct used_Medicine * next;
 };
 
-struct time { //æ—¶é—´
+struct time { //Ê±¼ä
 	int month;
 	int day;
 	int hour;
@@ -49,11 +49,11 @@ struct time { //æ—¶é—´
 };
 
 struct live_hospital {
-	struct time in_time; //ä½é™¢æ—¥æœŸ
-	struct time out_time; //é¢„è®¡å‡ºé™¢æ—¥æœŸ
-	int predict_days; //é¢„è®¡ä½é™¢å¤©æ•°
-	int pledge;//å‰©ä½™æŠ¼é‡‘
-	int cost;//å·²æ”¯ä»˜ä½é™¢è´¹ç”¨
+	struct time in_time; //×¡ÔºÈÕÆÚ
+	struct time out_time; //Ô¤¼Æ³öÔºÈÕÆÚ
+	int predict_days; //Ô¤¼Æ×¡ÔºÌìÊı
+	int pledge;//Ê£ÓàÑº½ğ
+	int cost;//ÒÑÖ§¸¶×¡Ôº·ÑÓÃ
 };
 
 #endif
