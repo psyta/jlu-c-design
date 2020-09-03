@@ -67,12 +67,24 @@ int main()
 	addOneRecord(r_list, p2, d1, t2);
 	addOneRecord(r_list, p3, d3, t3);
 
+	struct time time1 = create_time(8, 8, 8, 0);
+	float lh_cost = 0;
+
 	//deleteOneRecord(r_list, 803003);
 	//modifyOneRecord(r_list, p3, d3, t3, 803002);
-	searchByDepartment(r_list, "眼科");
-	searchByDoctor(r_list, 10001);
-	searchByPatient(r_list, "小明", 20);
-	printRecordDuringTime(r_list, 7, 1, 9, 1); //7.1-9.1
+	//searchByDepartment(r_list, "眼科");
+	//searchByDoctor(r_list, 10001);
+	//searchByPatient(r_list, "小明", 20);
+	//printRecordDuringTime(r_list, 7, 1, 9, 1); //7.1-9.1
+	//calcDoctorBusy(r_list, dc_list);
 	//print_all(r_list);
+
+	createLiveInHospital(r_list, time1);
+
+	print_all(r_list);
+	lh_cost = deduct_expenses(r_list, time1); //扣钱
+	print_all(r_list);
+
+	printf("总收入：%.2f元", calcCurrentTurnover(r_list, lh_cost));
 
 }

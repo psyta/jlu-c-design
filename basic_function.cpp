@@ -157,7 +157,6 @@ struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour,
 	new_live.pledge = 20000 * new_live.predict_days;
 	if (new_live.pledge < 100000)
 		new_live.pledge = 100000;
-	new_live.cost = 0;
 	return new_live;
 }
 

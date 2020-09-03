@@ -55,7 +55,6 @@ struct live_hospital {
 	struct time out_time; //预计出院日期
 	int predict_days; //预计住院天数
 	int pledge;//剩余押金
-	int cost;//已支付住院费用
 };
 
 #endif
