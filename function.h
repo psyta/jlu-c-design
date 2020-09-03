@@ -6,23 +6,28 @@
 #include "treatment.h"
 #include "record.h"
 
-struct patient create_patient(const char name[20], int age, int register_id); //保存患者信息
+/*
+保存患者信息
+需要：患者姓名、患者年龄、注册id
+返回 patient 结构体
+*/
+struct patient create_patient(const char name[20], int age, int register_id);
 
-struct doctor * create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list * list); //添加新医生
+struct doctor *create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list *list); //添加新医生
 
-struct doctor * find_doctor(int worker_id, struct doctor_list list);//根据工号搜寻医生
+struct doctor *find_doctor(int worker_id, struct doctor_list list); //根据工号搜寻医生
 
-struct treatment create_treatment(struct body_Check * bc, struct used_medicine * um, struct live_hospital * lh); //体检、用药、住院
+struct treatment create_treatment(struct body_Check *bc, struct used_medicine *um, struct live_hospital *lh); //体检、用药、住院
 
-struct body_Check * create_check(struct body_Check * previous, const char name[30], int price); //增加体检项目
+struct body_Check *create_check(struct body_Check *previous, const char name[30], int price); //增加体检项目
 
 void add_to_medicine_list(struct medicine_list list, const char name[30], int price); //增加药物种类
 
-struct medicine * search_medicine(struct medicine_list list, const char name[30]); //根据药名搜索药
+struct medicine *search_medicine(struct medicine_list list, const char name[30]); //根据药名搜索药
 
-struct used_Medicine create_use_m(struct used_Medicine * previous, struct medicine * m, int amount); //增加用药
+struct used_Medicine create_use_m(struct used_Medicine *previous, struct medicine *m, int amount); //增加用药
 
-struct time create_time(int month, int day, int hour, int minute);//创建时刻
+struct time create_time(int month, int day, int hour, int minute); //创建时刻
 
 struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour, int in_minute, int out_month, int out_day, int out_hour, int out_minute); //添加住院信息
 
