@@ -6,177 +6,232 @@
 #include "function.h"
 
 struct patient create_patient(const char name[20], int age, int register_id)
-{ //±£´æ»¼ÕßÐÅÏ¢
-	struct patient pa;
-	strcpy(pa.name, name);
-	pa.age = age;
-	pa.register_id = register_id;
-	return pa;
+{ //ä¿å­˜æ‚£è€…ä¿¡æ¯
+    struct patient pa;
+    strcpy(pa.name, name);
+    pa.age = age;
+    pa.register_id = register_id;
+    return pa;
 }
 
 struct doctor *create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list *list)
-{ //Ìí¼ÓÐÂÒ½Éú
-	struct doctor *dc;
-	struct doctor *temp;
-	int i;
-	//Éú³ÉÐÂ½áµã
-	dc = (struct doctor *)malloc(sizeof(struct doctor));
-	strcpy(dc->name, name);
-	strcpy(dc->level, level);
-	strcpy(dc->department, department);
-	dc->worker_id = worker_id;
-	dc->next = NULL;
-	for (i = 0; i < 8; i++)
-	{
-		dc->visit[i] = visit[i];
-	}
-	//Ìí¼Óµ½doctor_list
-	temp = list->head;
-	if (temp == NULL)
-	{
-		list->head = dc;
-	}
-	else
-	{
-		while (temp->next != NULL)
-		{
-			temp = temp->next;
-		}
-		temp->next = dc;
-	}
-	return dc;
+{ //æ·»åŠ æ–°åŒ»ç”Ÿ
+    struct doctor *dc;
+    struct doctor *temp;
+    int i;
+    //ç”Ÿæˆæ–°ç»“ç‚¹
+    dc = (struct doctor *)malloc(sizeof(struct doctor));
+    strcpy(dc->name, name);
+    strcpy(dc->level, level);
+    strcpy(dc->department, department);
+    dc->worker_id = worker_id;
+    dc->next = NULL;
+    for (i = 0; i < 8; i++)
+    {
+        dc->visit[i] = visit[i];
+    }
+    //æ·»åŠ åˆ°doctor_list
+    temp = list->head;
+    if (temp == NULL)
+    {
+        list->head = dc;
+    }
+    else
+    {
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = dc;
+    }
+    return dc;
 }
 
 struct doctor *find_doctor(int worker_id, struct doctor_list list)
-{ //¸ù¾Ý¹¤ºÅËÑÑ°Ò½Éú
-	struct doctor *temp;
-	temp = list.head;
-	while (temp != NULL)
-	{
-		if (temp->worker_id == worker_id)
-			return temp;
-		temp = temp->next;
-	}
-	return NULL;
+{ //æ ¹æ®å·¥å·æœå¯»åŒ»ç”Ÿ
+    struct doctor *temp;
+    temp = list.head;
+    while (temp != NULL)
+    {
+        if (temp->worker_id == worker_id)
+            return temp;
+        temp = temp->next;
+    }
+    return NULL;
 }
 
-struct treatment create_treatment(struct body_Check *bc, struct used_medicine *um, struct live_hospital *lh)
-{ //Ìå¼ì¡¢ÓÃÒ©¡¢×¡Ôº
-	struct treatment tm;
-	tm.bc = bc;
-	tm.um = um;
-	tm.lh = lh;
-	//Ìí¼Ó×Ü¼Û¸ñ¼ÆËã
-	return tm;
+struct treatment create_treatment(struct body_Check *bc, struct used_Medicine *um, struct live_hospital *lh)
+{ //ä½“æ£€ã€ç”¨è¯ã€ä½é™¢
+    struct treatment tm;
+    tm.bc = bc;
+    tm.um = um;
+    tm.lh = lh;
+    //æ·»åŠ æ€»ä»·æ ¼è®¡ç®—
+    return tm;
 }
 
 struct body_Check *create_check(struct body_Check *previous, const char name[30], int price)
-{ //Ôö¼ÓÌå¼ìÏîÄ¿
-	struct body_Check *check;
-	check = (struct body_Check *)malloc(sizeof(struct body_Check));
-	strcpy(check->name, name);
-	check->price = price;
-	check->next = NULL;
-	if (previous != NULL)
-		previous->next = check;
-	return check;
+{ //å¢žåŠ ä½“æ£€é¡¹ç›®
+    struct body_Check *check;
+    check = (struct body_Check *)malloc(sizeof(struct body_Check));
+    strcpy(check->name, name);
+    check->price = price;
+    check->next = NULL;
+    if (previous != NULL)
+        previous->next = check;
+    return check;
 }
 
-void add_to_medicine_list(struct medicine_list list, const char name[30], int price)
-{ //Ôö¼ÓÒ©ÎïÖÖÀà
-	struct medicine *temp;
-	struct medicine *m;
-	m = (struct medicine *)malloc(sizeof(struct medicine));
-	temp = list.head;
-	if (temp == NULL)
-	{
-		list.head = m;
-	}
-	else
-	{
-		while (temp->next != NULL)
-		{
-			temp = temp->next;
-		}
-		temp->next = m;
-	}
+void add_to_medicine_list(struct medicine_list *list, const char name[30], int price)
+{ //å¢žåŠ è¯ç‰©ç§ç±»
+    struct medicine *temp;
+    struct medicine *m;
+    m = (struct medicine *)malloc(sizeof(struct medicine));
+    strcpy(m->name, name);
+    m->unit_Price = price;
+    m->next = NULL;
+    temp = list->head;
+    if (temp == NULL)
+    {
+        list->head = m;
+    }
+    else
+    {
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = m;
+    }
 }
 
-struct medicine *search_medicine(struct medicine_list list, const char name[30])
-{ //¸ù¾ÝÒ©ÃûËÑË÷Ò©
-	struct medicine *temp;
-	temp = list.head;
-	while (temp != NULL)
-	{
-		if (strcmp(temp->name, name))
-			return temp;
-	}
-	return NULL;
+struct medicine *search_medicine(struct medicine_list *list, const char name[30])
+{ //æ ¹æ®è¯åæœç´¢è¯
+    struct medicine *temp;
+    temp = list->head;
+    while (temp != NULL)
+    {
+        if (strcmp(temp->name, name) == 0) //ç›¸ç­‰
+            return temp;
+        temp = temp->next;
+    }
+    return NULL;
 }
 
-struct used_Medicine create_use_m(struct used_Medicine *previous, struct medicine *m, int amount)
-{ //Ôö¼ÓÓÃÒ©
-	struct used_Medicine use;
-	use.use_m = m;
-	use.amount = amount;
-	use.next = NULL;
-	if (previous != NULL)
-		previous->next = &use;
-	return use;
+struct used_Medicine *create_use_m(struct used_Medicine *previous, struct medicine *m, int amount)
+{ //å¢žåŠ ç”¨è¯
+    struct used_Medicine *use;
+    use = (struct used_Medicine *)malloc(sizeof(struct used_Medicine));
+    use->use_m = m;
+    use->amount = amount;
+    use->next = NULL;
+    if (previous != NULL)
+        previous->next = use;
+    return use;
 }
 
 struct time create_time(int month, int day, int hour, int minute)
-{ //´´½¨Ê±¿Ì
-	struct time new_time;
-	new_time.month = month;
-	new_time.day = day;
-	new_time.hour = hour;
-	new_time.minute = minute;
-	return new_time;
+{ //åˆ›å»ºæ—¶åˆ»
+    struct time new_time;
+    new_time.month = month;
+    new_time.day = day;
+    new_time.hour = hour;
+    new_time.minute = minute;
+    return new_time;
 }
 
 struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour, int in_minute, int out_month, int out_day, int out_hour, int out_minute)
-{ //Ìí¼Ó×¡ÔºÐÅÏ¢
-	struct live_hospital new_live;
-	struct time in_time;
-	struct time out_time;
-	in_time = create_time(in_month, in_day, in_hour, in_minute);
-	out_time = create_time(out_month, out_day, out_hour, out_minute);
-	new_live.in_time = in_time;
-	new_live.out_time = out_time;
-	new_live.predict_days = ((out_month - in_month) * 30 + (out_day - in_day));
-	if (out_hour < 8)
-		new_live.predict_days++;
-	new_live.pledge = 20000 * new_live.predict_days;
-	if (new_live.pledge < 100000)
-		new_live.pledge = 100000;
-	new_live.cost = 0;
-	return new_live;
+{ //æ·»åŠ ä½é™¢ä¿¡æ¯
+    struct live_hospital new_live;
+    struct time in_time;
+    struct time out_time;
+    in_time = create_time(in_month, in_day, in_hour, in_minute);
+    out_time = create_time(out_month, out_day, out_hour, out_minute);
+    new_live.in_time = in_time;
+    new_live.out_time = out_time;
+    new_live.predict_days = ((out_month - in_month) * 30 + (out_day - in_day));
+    if (out_hour < 8)
+        new_live.predict_days++;
+    new_live.pledge = 20000 * new_live.predict_days;
+    if (new_live.pledge < 100000)
+        new_live.pledge = 100000;
+    new_live.cost = 0;
+    return new_live;
 }
 
-int addOneRecord(struct record_list list, struct patient pa, struct doctor doc, struct treatment tm)
-{ //Ìí¼ÓÒ»ÌõÐÅÏ¢£¬ÔÚ´ËÖ®Ç°ÐèÒªÌí¼ÓÆäËûÅÐ¶Ïº¯Êý
-	struct record *temp;
-	struct record *new_record;
-	//Éú³ÉÐÂ½áµã
-	new_record = (struct record *)malloc(sizeof(struct record));
-	new_record->pa = pa;
-	new_record->doc = doc;
-	new_record->tm = tm;
-	new_record->next = NULL;
-	//Ìí¼Óµ½record_list
-	temp = list.head;
-	if (temp == NULL)
-	{
-		list.head = new_record;
-	}
-	else
-	{
-		while (temp->next != NULL)
-		{
-			temp = temp->next;
-		}
-		temp->next = new_record;
-	}
-	return 0;
+int addOneRecord(struct record_list *list, struct patient pa, struct doctor *doc, struct treatment tm)
+{ //æ·»åŠ ä¸€æ¡ä¿¡æ¯ï¼Œåœ¨æ­¤ä¹‹å‰éœ€è¦æ·»åŠ å…¶ä»–åˆ¤æ–­å‡½æ•°
+    struct record *temp;
+    struct record *new_record;
+    //ç”Ÿæˆæ–°ç»“ç‚¹
+    new_record = (struct record *)malloc(sizeof(struct record));
+    new_record->pa = pa;
+    new_record->doc = doc;
+    new_record->tm = tm;
+    new_record->next = NULL;
+    //æ·»åŠ åˆ°record_list
+    temp = list->head;
+    if (temp == NULL)
+    {
+        list->head = new_record;
+    }
+    else
+    {
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = new_record;
+    }
+    return 0;
+}
+
+void print_all(struct record_list *list)
+{ //è¾“å‡ºå…¨éƒ¨ä¿¡æ¯ï¼Œæµ‹è¯•ç”¨
+    struct record *temp;
+    struct body_Check *temp_c;
+    struct used_Medicine *temp_m;
+    int i, j;
+    i = 1;
+    temp = list->head;
+    while (temp != NULL)
+    {
+        printf("ç¬¬%dæ¡è®°å½•ï¼š\n", i);
+        printf("æ‚£è€…å§“åï¼š%s   ", temp->pa.name);
+        printf("æ‚£è€…å¹´é¾„ï¼š%d\n", temp->pa.age);
+        printf("æŒ‚å·:%d\n", temp->pa.register_id);
+        printf("åŒ»ç”Ÿå§“åï¼š%s   ", temp->doc->name);
+        printf("åŒ»ç”Ÿç­‰çº§ï¼š%s   ", temp->doc->level);
+        printf("åŒ»ç”Ÿç§‘å®¤ï¼š%s\n", temp->doc->department);
+        printf("åŒ»ç”Ÿå·¥å·ï¼š%d   ", temp->doc->worker_id);
+        printf("åŒ»ç”Ÿä¸€å‘¨ä¸Šç­å¤©æ•°ï¼š%d\n", temp->doc->visit[0]);
+        j = 1;
+        temp_c = temp->tm.bc;
+        while (temp_c != NULL)
+        {
+            printf("æ£€æŸ¥æµç¨‹%dï¼š%s   ", j, temp_c->name);
+            printf("ä»·æ ¼ï¼š%då…ƒ\n", temp_c->price / 100);
+            j++;
+            temp_c = temp_c->next;
+        }
+        //æ€»ä»·æ ¼
+        j = 1;
+        temp_m = temp->tm.um;
+        while (temp_m != NULL)
+        {
+            printf("è¯å“%dï¼š%s   ", j, temp_m->use_m->name);
+            printf("å•ä»·ï¼š%då…ƒ   ", temp_m->use_m->unit_Price / 100);
+            printf("æ•°é‡ï¼š%d\n", temp_m->amount);
+            j++;
+            temp_m = temp_m->next;
+        }
+        //æ€»ä»·æ ¼
+        printf("ä½é™¢æ—¶é—´ï¼š%dæœˆ%dæ—¥%dæ—¶%dåˆ†\n", temp->tm.lh->in_time.month, temp->tm.lh->in_time.day, temp->tm.lh->in_time.hour, temp->tm.lh->in_time.minute);
+        printf("é¢„æœŸå‡ºé™¢æ—¶é—´ï¼š%dæœˆ%dæ—¥%dæ—¶%dåˆ†\n", temp->tm.lh->out_time.month, temp->tm.lh->out_time.day, temp->tm.lh->out_time.hour, temp->tm.lh->out_time.minute);
+        printf("é¢„æœŸä½é™¢å¤©æ•°ï¼š%d   ", temp->tm.lh->predict_days);
+        printf("æŠ¼é‡‘ï¼š%d\n", temp->tm.lh->pledge / 100);
+        i++;
+        temp = temp->next;
+        printf("\n");
+    }
 }
