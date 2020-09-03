@@ -2,10 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "function.h"
+#include "interaction.h"
+#include "inputFunc.h"
 
 int main()
 {
     struct patient p1, p2, p3;
+    // p1 = inter_craate_patient();
+    // p1 = create_patient(p1.name, p1.age, p1.register_id);
     p1 = create_patient("小明", 20, 80301);
     p2 = create_patient("小刚", 18, 80302);
     p3 = create_patient("小红", 22, 80303);
@@ -14,7 +18,14 @@ int main()
     struct doctor_list dc_list;
     dc_list.head = NULL;
     int work[8] = {7, 1, 1, 1, 1, 1, 1, 1};
-    d1 = create_doctor("小李", "副主任医师", "牙科", 10001, work, &dc_list);
+
+    // d1 = inter_create_doctor() ; 错误 ❌
+    // 正确：
+    struct doctor tempDoctor = inter_create_doctor();
+    d1 = &(tempDoctor);
+
+    d1 = create_doctor(d1->name, d1->level, d1->department, d1->worker_id, d1->visit, &dc_list);
+    // d1 = create_doctor("小李", "副主任医师", "牙科", 10001, work, &dc_list);
     d2 = create_doctor("小王", "主任医师", "眼科", 10002, work, &dc_list);
     d3 = create_doctor("小张", "主任医师", "肠胃科", 10003, work, &dc_list);
 
