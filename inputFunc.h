@@ -13,4 +13,7 @@ int inputID(char *title);
 // 医生上班数组
 int *inputWork();
 
+// 输入金额
+int inputPrice();
+
 #endif

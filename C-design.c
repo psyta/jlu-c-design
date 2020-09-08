@@ -29,8 +29,9 @@ int main()
     d3 = create_doctor("小张", "主任医师", "肠胃科", 10003, work, &dc_list);
 
     struct body_Check *c1, *c2, *c3, *c4, *c5;
-    c1 = create_check(NULL, "验血", 3000);
-    c2 = create_check(c1, "体温", 500);
+    c1 = inter_create_check();
+    // c1 = create_check(NULL, "验血", 3000);
+    // c2 = create_check(c1, "体温", 500);
     c3 = create_check(NULL, "验血", 3500);
     c4 = create_check(c3, "体温", 700);
     c5 = create_check(NULL, "胃镜", 50000);

@@ -5,7 +5,8 @@
 #include <string.h>
 #include "basic_function.h"
 
-struct patient create_patient(const char name[20], int age, int register_id) { //保存患者信息
+struct patient create_patient(const char name[20], int age, int register_id)
+{ //保存患者信息
 	struct patient pa;
 	strcpy(pa.name, name);
 	pa.age = age;
@@ -13,9 +14,10 @@ struct patient create_patient(const char name[20], int age, int register_id) { /
 	return pa;
 }
 
-struct doctor * create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list * list) { //添加新医生
-	struct doctor * dc;
-	struct doctor * temp;
+struct doctor *create_doctor(const char name[20], const char level[20], const char department[20], int worker_id, int visit[8], struct doctor_list *list)
+{ //添加新医生
+	struct doctor *dc;
+	struct doctor *temp;
 	int i;
 	//生成新结点
 	dc = (struct doctor *)malloc(sizeof(struct doctor));
@@ -24,16 +26,20 @@ struct doctor * create_doctor(const char name[20], const char level[20], const c
 	strcpy(dc->department, department);
 	dc->worker_id = worker_id;
 	dc->next = NULL;
-	for (i = 0; i < 8; i++) {
+	for (i = 0; i < 8; i++)
+	{
 		dc->visit[i] = visit[i];
 	}
 	//添加到doctor_list
 	temp = list->head;
-	if (temp == NULL) {
+	if (temp == NULL)
+	{
 		list->head = dc;
 	}
-	else {
-		while (temp->next != NULL) {
+	else
+	{
+		while (temp->next != NULL)
+		{
 			temp = temp->next;
 		}
 		temp->next = dc;
@@ -41,10 +47,12 @@ struct doctor * create_doctor(const char name[20], const char level[20], const c
 	return dc;
 }
 
-struct doctor * find_doctor(int worker_id, struct doctor_list list) { //根据工号搜寻医生
-	struct doctor * temp;
+struct doctor *find_doctor(int worker_id, struct doctor_list list)
+{ //根据工号搜寻医生
+	struct doctor *temp;
 	temp = list.head;
-	while (temp != NULL) {
+	while (temp != NULL)
+	{
 		if (temp->worker_id == worker_id)
 			return temp;
 		temp = temp->next;
@@ -52,10 +60,11 @@ struct doctor * find_doctor(int worker_id, struct doctor_list list) { //根据�
 	return NULL;
 }
 
-struct treatment create_treatment(struct body_Check * bc, struct used_Medicine * um, struct live_hospital * lh) { //体检、用药、住院
+struct treatment create_treatment(struct body_Check *bc, struct used_Medicine *um, struct live_hospital *lh)
+{ //体检、用药、住院
 	struct treatment tm;
-	struct body_Check * temp1;
-	struct used_Medicine * temp2;
+	struct body_Check *temp1;
+	struct used_Medicine *temp2;
 	int num_c = 0;
 	int cost_c = 0;
 	int num_m = 0;
@@ -64,7 +73,8 @@ struct treatment create_treatment(struct body_Check * bc, struct used_Medicine *
 	tm.um = um;
 	tm.lh = lh;
 	temp1 = bc;
-	while (bc != NULL) {
+	while (bc != NULL)
+	{
 		num_c++;
 		cost_c += bc->price;
 		bc = bc->next;
@@ -72,9 +82,10 @@ struct treatment create_treatment(struct body_Check * bc, struct used_Medicine *
 	tm.check_num = num_c;
 	tm.check_total_price = cost_c;
 	temp2 = um;
-	while (um != NULL) {
+	while (um != NULL)
+	{
 		num_m++;
-		cost_m += um->amount*um->use_m->unit_Price;
+		cost_m += um->amount * um->use_m->unit_Price;
 		um = um->next;
 	}
 	tm.medicine_num = num_m;
@@ -82,8 +93,9 @@ struct treatment create_treatment(struct body_Check * bc, struct used_Medicine *
 	return tm;
 }
 
-struct body_Check * create_check(struct body_Check * previous, const char name[30], int price) { //增加体检项目
-	struct body_Check * check;
+struct body_Check *create_check(struct body_Check *previous, const char name[30], int price)
+{ //增加体检项目
+	struct body_Check *check;
 	check = (struct body_Check *)malloc(sizeof(struct body_Check));
 	strcpy(check->name, name);
 	check->price = price;
@@ -93,38 +105,45 @@ struct body_Check * create_check(struct body_Check * previous, const char name[3
 	return check;
 }
 
-void add_to_medicine_list(struct medicine_list * list, const char name[30], int price) { //增加药物种类
-	struct medicine * temp;
-	struct medicine * m;
+void add_to_medicine_list(struct medicine_list *list, const char name[30], int price)
+{ //增加药物种类
+	struct medicine *temp;
+	struct medicine *m;
 	m = (struct medicine *)malloc(sizeof(struct medicine));
 	strcpy(m->name, name);
 	m->unit_Price = price;
 	m->next = NULL;
 	temp = list->head;
-	if (temp == NULL) {
+	if (temp == NULL)
+	{
 		list->head = m;
 	}
-	else {
-		while (temp->next != NULL) {
+	else
+	{
+		while (temp->next != NULL)
+		{
 			temp = temp->next;
 		}
 		temp->next = m;
 	}
 }
 
-struct medicine * search_medicine(struct medicine_list * list, const char name[30]) {//根据药名搜索药
-	struct medicine * temp;
+struct medicine *search_medicine(struct medicine_list *list, const char name[30])
+{ //根据药名搜索药
+	struct medicine *temp;
 	temp = list->head;
-	while (temp != NULL) {
-		if (strcmp(temp->name, name) == 0)//相等
+	while (temp != NULL)
+	{
+		if (strcmp(temp->name, name) == 0) //相等
 			return temp;
 		temp = temp->next;
 	}
 	return NULL;
 }
 
-struct used_Medicine * create_use_m(struct used_Medicine * previous, struct medicine * m, int amount) { //增加用药
-	struct used_Medicine * use;
+struct used_Medicine *create_use_m(struct used_Medicine *previous, struct medicine *m, int amount)
+{ //增加用药
+	struct used_Medicine *use;
 	use = (struct used_Medicine *)malloc(sizeof(struct used_Medicine));
 	use->use_m = m;
 	use->amount = amount;
@@ -134,7 +153,8 @@ struct used_Medicine * create_use_m(struct used_Medicine * previous, struct medi
 	return use;
 }
 
-struct time create_time(int month, int day, int hour, int minute) { //创建时刻
+struct time create_time(int month, int day, int hour, int minute)
+{ //创建时刻
 	struct time new_time;
 	new_time.month = month;
 	new_time.day = day;
@@ -143,7 +163,8 @@ struct time create_time(int month, int day, int hour, int minute) { //创建时�
 	return new_time;
 }
 
-struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour, int in_minute, int out_month, int out_day, int out_hour, int out_minute) { //添加住院信息
+struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour, int in_minute, int out_month, int out_day, int out_hour, int out_minute)
+{ //添加住院信息
 	struct live_hospital new_live;
 	struct time in_time;
 	struct time out_time;
@@ -160,9 +181,10 @@ struct live_hospital create_live_hospital(int in_month, int in_day, int in_hour,
 	return new_live;
 }
 
-int addOneRecord(struct record_list * list, struct patient pa, struct doctor * doc, struct treatment tm) { //添加一条信息，在此之前需要添加其他判断函数
-	struct record * temp;
-	struct record * new_record;
+int addOneRecord(struct record_list *list, struct patient pa, struct doctor *doc, struct treatment tm)
+{ //添加一条信息，在此之前需要添加其他判断函数
+	struct record *temp;
+	struct record *new_record;
 	//生成新结点
 	new_record = (struct record *)malloc(sizeof(struct record));
 	new_record->pa = pa;
@@ -171,11 +193,14 @@ int addOneRecord(struct record_list * list, struct patient pa, struct doctor * d
 	new_record->next = NULL;
 	//添加到record_list
 	temp = list->head;
-	if (temp == NULL) {
+	if (temp == NULL)
+	{
 		list->head = new_record;
 	}
-	else {
-		while (temp->next != NULL) {
+	else
+	{
+		while (temp->next != NULL)
+		{
 			temp = temp->next;
 		}
 		temp->next = new_record;
@@ -183,9 +208,10 @@ int addOneRecord(struct record_list * list, struct patient pa, struct doctor * d
 	return 1;
 }
 
-void print_record(struct record * temp){
-	struct body_Check * temp_c;
-	struct used_Medicine * temp_m;
+void print_record(struct record *temp)
+{
+	struct body_Check *temp_c;
+	struct used_Medicine *temp_m;
 	int j;
 	printf("患者姓名：%s   ", temp->pa.name);
 	printf("患者年龄：%d\n", temp->pa.age);
@@ -198,7 +224,8 @@ void print_record(struct record * temp){
 	j = 1;
 	temp_c = temp->tm.bc;
 	printf("检查流程数：%d\n", temp->tm.check_num);
-	while (temp_c != NULL) {
+	while (temp_c != NULL)
+	{
 		printf("检查流程%d：%s   ", j, temp_c->name);
 		printf("价格：%.2f元\n", float(temp_c->price) / 100);
 		j++;
@@ -208,7 +235,8 @@ void print_record(struct record * temp){
 	j = 1;
 	temp_m = temp->tm.um;
 	printf("药品种类数：%d\n", temp->tm.medicine_num);
-	while (temp_m != NULL) {
+	while (temp_m != NULL)
+	{
 		printf("药品%d：%s   ", j, temp_m->use_m->name);
 		printf("单价：%.2f元   ", float(temp_m->use_m->unit_Price) / 100);
 		printf("数量：%d\n", temp_m->amount);
@@ -223,12 +251,14 @@ void print_record(struct record * temp){
 	printf("\n");
 }
 
-void print_all(struct record_list * list) { //输出全部信息，测试用
-	struct record * temp;
+void print_all(struct record_list *list)
+{ //输出全部信息，测试用
+	struct record *temp;
 	int i;
 	i = 1;
 	temp = list->head;
-	while (temp != NULL) {
+	while (temp != NULL)
+	{
 		printf("第%d条记录\n", i);
 		print_record(temp);
 		i++;

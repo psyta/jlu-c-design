@@ -13,6 +13,7 @@ struct patient inter_craate_patient();
 // 交互设计: 保存医生信息, 返回一个医生结构体
 struct doctor inter_create_doctor();
 
-// 交互设计
+// 交互设：保存身体检查信息，返回身体检查链表的头指针
+struct body_Check *inter_create_check();
 
 #endif
