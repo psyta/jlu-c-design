@@ -119,4 +119,5 @@ struct body_Check *inter_create_check()
             printf("ERR!");
         }
     }
+    return 0;
 }
